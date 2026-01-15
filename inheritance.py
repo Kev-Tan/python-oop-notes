@@ -1,97 +1,142 @@
-# 1 class gets attributes/methods from one or multiple classes
-# Child class gets attributes/methods from parent class
-# This concept is called inheritance
-# Improve reusability
-# A class can inherit from an unlimited number of other classes
+"""
+=====================================================
+Python OOP Notes: Inheritance
+=====================================================
 
+Key ideas:
+- A child class can inherit attributes and methods from one or more parent classes
+- This concept is called *inheritance*
+- Inheritance improves code reusability
+- A class can inherit from an unlimited number of other classes (multiple inheritance)
 
-# class Monster:
-#     def __init__(self, health, energy):
-#         self.health = health
-#         self.energy = energy
+IMPORTANT:
+- Commented code is intentionally kept as reference from previous exercises
+- Comments ≠ useless code — they document learning progression
+"""
 
-#     #methods
-#     def attack(self, amount):
-#         print("The monster has attacked!")
-#         print(f'{amount} damage was dealt')
-#         self.energy-=20
+# =====================================================
+# Base Class (Parent)
+# =====================================================
 
-#     def move(self, speed):
-#         print("The monster has moved")
-#         print(f'It has a speed of {speed}')
-
-# # To get inheritance, put bracket after class and put in the class you want to inherit from
-# class Shark(Monster):
-#     # Calling init from parents to get parents' attributes (old method)
-#     def __init__(self, speed, health, energy):
-#         Monster.__init__(self, health, energy)
-#         self.speed = speed
-
-#     def bite(self):
-#         print('The shark has bitten')
-
-#     # Function overriding
-#     def move(self):
-#         print("The shark has moved")
-#         print(f"The speed of the shark is {self.speed}")
-
-# shark = Shark(speed = 120, health = 100, energy = 80)
-# print(shark.health)
-# print(shark.speed, shark.health, shark.energy)
-
-# New method for getting attributes from parents init
 class Monster:
+    """
+    Base Monster class.
+
+    Attributes:
+        health (int): Monster's health points
+        energy (int): Monster's energy points
+    """
+
     def __init__(self, health, energy):
         self.health = health
         self.energy = energy
 
-    #methods
+    # -------------------------------
+    # Methods
+    # -------------------------------
     def attack(self, amount):
+        """
+        Perform an attack that deals damage and consumes energy.
+        """
         print("The monster has attacked!")
-        print(f'{amount} damage was dealt')
-        self.energy-=20
+        print(f"{amount} damage was dealt")
+        self.energy -= 20
 
     def move(self, speed):
+        """
+        Move the monster with a given speed.
+        """
         print("The monster has moved")
-        print(f'It has a speed of {speed}')
+        print(f"It has a speed of {speed}")
 
-# # To get inheritance, put bracket after class and put in the class you want to inherit from
-# # Much better approach
+
+# =====================================================
+# OLD METHOD OF INHERITANCE (kept for reference)
+# =====================================================
+
 # class Shark(Monster):
-#     # Calling init from parents to get parents' attributes (old method)
+#     """
+#     Shark class inheriting from Monster (OLD init style).
+#     """
 #     def __init__(self, speed, health, energy):
-#         # Monster.__init__(self, health, energy)
-#         super().__init__(health, energy)
+#         Monster.__init__(self, health, energy)  # explicit parent call
 #         self.speed = speed
-
+#
 #     def bite(self):
-#         print('The shark has bitten')
-
-#     # Function overriding
+#         print("The shark has bitten")
+#
+#     # Method overriding
 #     def move(self):
 #         print("The shark has moved")
 #         print(f"The speed of the shark is {self.speed}")
-
-# shark = Shark(speed = 120, health = 100, energy = 80)
+#
+# shark = Shark(speed=120, health=100, energy=80)
 # print(shark.health)
 # print(shark.speed, shark.health, shark.energy)
 
-#Exercise
-# Create scorpion class that inherits from monster
-# Health and energy from the parent
-# poison_damage attribute
-# Overwite the damage method to show poison damage
+
+# =====================================================
+# MODERN / RECOMMENDED METHOD (super())
+# =====================================================
+
+# class Shark(Monster):
+#     """
+#     Shark class inheriting from Monster using super().
+#     """
+#     def __init__(self, speed, health, energy):
+#         super().__init__(health, energy)  # preferred approach
+#         self.speed = speed
+#
+#     def bite(self):
+#         print("The shark has bitten")
+#
+#     # Method overriding
+#     def move(self):
+#         print("The shark has moved")
+#         print(f"The speed of the shark is {self.speed}")
+#
+# shark = Shark(speed=120, health=100, energy=80)
+# print(shark.speed, shark.health, shark.energy)
+
+
+# =====================================================
+# EXERCISE: Scorpion Class
+# =====================================================
 
 class Scorpion(Monster):
+    """
+    Scorpion class inheriting from Monster.
+
+    Additional Attributes:
+        poison_damage (int): Extra poison damage applied on attack
+    """
+
     def __init__(self, scorpion_health, scorpion_energy, poison_damage):
-        super().__init__(health = scorpion_health, energy = scorpion_energy)
+        super().__init__(health=scorpion_health, energy=scorpion_energy)
         self.poison_damage = poison_damage
 
+    # Method overriding
     def attack(self):
-        print(f'Poison damage of value {self.poison_damage} is applied')
+        """
+        Override attack to apply poison damage.
+        """
+        print(f"Poison damage of value {self.poison_damage} is applied")
 
 
-scorpion1 = Scorpion(scorpion_health=50, scorpion_energy=25, poison_damage=5)
+# =====================================================
+# Example Usage
+# =====================================================
+
+scorpion1 = Scorpion(
+    scorpion_health=50,
+    scorpion_energy=25,
+    poison_damage=5
+)
+
 scorpion1.attack()
 scorpion1.move(10)
-print(f'Scorpion health is {scorpion1.health}, energy is {scorpion1.energy}')
+
+print(
+    f"Scorpion health is {scorpion1.health}, "
+    f"energy is {scorpion1.energy}"
+)
